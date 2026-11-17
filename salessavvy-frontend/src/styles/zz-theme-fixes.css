@@ -1,0 +1,55 @@
+/* SalesSavvy cross-page theme fixes. Light mode remains unchanged. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] main { background:var(--ss-page); color:var(--ss-ink); }
+:root[data-theme="dark"] h1,:root[data-theme="dark"] h2,:root[data-theme="dark"] h3,
+:root[data-theme="dark"] h4,:root[data-theme="dark"] label { color:var(--ss-ink); }
+:root[data-theme="dark"] p,:root[data-theme="dark"] small,:root[data-theme="dark"] .muted { color:var(--ss-muted); }
+:root[data-theme="dark"] input,:root[data-theme="dark"] select,:root[data-theme="dark"] textarea {
+ background:var(--ss-surface-soft)!important;color:var(--ss-ink)!important;border-color:var(--ss-border)!important;
+}
+:root[data-theme="dark"] input::placeholder,:root[data-theme="dark"] textarea::placeholder {color:var(--ss-muted)!important;opacity:1}
+:root[data-theme="dark"] option {background:var(--ss-surface);color:var(--ss-ink)}
+:root[data-theme="dark"] table {color:var(--ss-ink)}
+:root[data-theme="dark"] th {background:#29394b!important;color:#edf3fa!important;border-color:var(--ss-border)!important}
+:root[data-theme="dark"] td {color:var(--ss-ink)!important;border-color:var(--ss-border)!important}
+:root[data-theme="dark"] button:not(.ss-theme-toggle):not(.ss-management-trigger):not(.ss-nav-actions button) {
+  border-color:var(--ss-border);
+}
+:root[data-theme="dark"] .auth-card,:root[data-theme="dark"] .cart-item,
+:root[data-theme="dark"] .cart-summary,:root[data-theme="dark"] .order-card,
+:root[data-theme="dark"] .order-detail-card,:root[data-theme="dark"] .wishlist-card,
+:root[data-theme="dark"] .product-filters,:root[data-theme="dark"] .admin-card,
+:root[data-theme="dark"] .category-card,:root[data-theme="dark"] .admin-review-card,
+:root[data-theme="dark"] .admin-reviews-page > section {
+ background:var(--ss-surface)!important;color:var(--ss-ink)!important;border-color:var(--ss-border)!important;
+}
+:root[data-theme="dark"] .auth-card > p,:root[data-theme="dark"] .cart-heading p,
+:root[data-theme="dark"] .cart-sku,:root[data-theme="dark"] .summary-row,
+:root[data-theme="dark"] .order-details-heading p,:root[data-theme="dark"] .shipping-address {color:var(--ss-muted)!important}
+:root[data-theme="dark"] .cart-item img {background:var(--ss-surface-soft)}
+:root[data-theme="dark"] .cart-summary {background:var(--ss-surface)!important}
+:root[data-theme="dark"] .quantity-control button {background:var(--ss-surface-soft);color:var(--ss-ink);border-color:var(--ss-border)}
+:root[data-theme="dark"] .summary-total {color:var(--ss-ink)}
+:root[data-theme="dark"] .summary-divider {border-color:var(--ss-border)}
+/* White secondary buttons with white text were unreadable in dark mode. */
+:root[data-theme="dark"] .refresh-reviews-btn,
+:root[data-theme="dark"] .coupon-cancel-btn,
+:root[data-theme="dark"] .coupon-close-btn,
+:root[data-theme="dark"] .admin-orders-pagination button,
+:root[data-theme="dark"] .admin-customers-pagination button {
+ background:var(--ss-surface-soft)!important;color:var(--ss-ink)!important;border:1px solid var(--ss-border)!important;
+}
+:root[data-theme="dark"] .pending-reviews-summary {background:#24364d!important;border:1px solid #385273}
+:root[data-theme="dark"] .pending-reviews-summary h2,:root[data-theme="dark"] .pending-reviews-summary p {color:var(--ss-ink)!important}
+:root[data-theme="dark"] .admin-review-comment {background:var(--ss-surface-soft)!important;border:1px solid var(--ss-border)}
+:root[data-theme="dark"] .admin-review-comment strong,:root[data-theme="dark"] .admin-review-comment p {color:var(--ss-ink)!important}
+:root[data-theme="dark"] .admin-reviews-header h1,:root[data-theme="dark"] .admin-review-top h3,
+:root[data-theme="dark"] .no-pending-reviews h2 {color:var(--ss-ink)!important}
+:root[data-theme="dark"] .admin-review-details,:root[data-theme="dark"] .admin-review-top p,
+:root[data-theme="dark"] .no-pending-reviews p {color:var(--ss-muted)!important}
+:root[data-theme="dark"] .no-pending-reviews {color:#55d69a}
+:root[data-theme="dark"] .pending-review-badge {background:#59451e;color:#ffe2a1}
+:root[data-theme="dark"] .ss-navbar {background:var(--ss-surface);border-color:var(--ss-border)}

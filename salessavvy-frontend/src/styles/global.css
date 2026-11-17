@@ -1,0 +1,983 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #20242d;
+  background: #ffffff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  font-smooth: always;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+.order-details-page {
+  max-width: 1100px;
+  margin: 55px auto;
+  padding: 0 24px 60px;
+}
+
+.back-orders-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin-bottom: 30px;
+  font-size: 15px;
+}
+
+.order-details-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.order-details-heading h1 {
+  font-size: 34px;
+  margin: 10px 0;
+}
+
+.order-eyebrow {
+  color: #2874F0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.order-details-heading p,
+.shipping-address {
+  color: #777;
+}
+
+.order-detail-card {
+  border: 1px solid #e9e7ef;
+  border-radius: 16px;
+  padding: 26px;
+  margin-bottom: 22px;
+  background: white;
+}
+
+.order-detail-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 22px;
+  font-size: 21px;
+}
+
+.detail-product,
+.detail-total,
+.payment-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.detail-product {
+  padding: 18px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-product h3 {
+  margin: 0 0 8px;
+}
+
+.detail-product p {
+  color: #777;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.detail-total {
+  padding-top: 22px;
+  font-size: 19px;
+}
+
+.detail-total strong {
+  color: #2874F0;
+}
+
+.payment-detail {
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
+
+.payment-detail-row {
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+.payment-detail-row span {
+  color: #777;
+}
+
+.transaction-id {
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.order-status,
+.payment-status {
+  font-weight: 700;
+}
+
+.order-status {
+  background: #EAF2FF;
+  color: #2874F0;
+  border-radius: 30px;
+  padding: 10px 17px;
+}
+
+.payment-status.success {
+  color: #059669;
+}
+
+.payment-status.initiated,
+.payment-status.pending {
+  color: #2874F0;
+}
+
+.payment-status.failed {
+  color: #dc2626;
+}
+
+.payment-status.refunded {
+  color: #0d9488;
+}
+
+.order-details-message {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+
+
+.orders-page {
+  max-width: 1320px;
+  margin: 65px auto;
+  padding: 0 25px 60px;
+}
+
+.orders-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 38px;
+}
+
+.orders-eyebrow {
+  color: #2874F0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.orders-heading h1 {
+  font-size: 38px;
+  margin: 12px 0;
+}
+
+.orders-heading p {
+  color: #777;
+}
+
+.orders-refresh,
+.order-details-btn,
+.orders-empty button,
+.orders-message button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background: #2874F0;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.orders-refresh:disabled,
+.order-cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.order-card {
+  border: 1px solid #e9e7ef;
+  border-radius: 16px;
+  padding: 27px;
+  margin-bottom: 25px;
+  background: white;
+}
+
+.order-card-header,
+.order-meta,
+.order-product,
+.order-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.order-label {
+  color: #888;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.order-card-header h3 {
+  margin: 8px 0;
+  font-size: 22px;
+}
+
+.order-status {
+  padding: 9px 15px;
+  border-radius: 30px;
+  background: #EAF2FF;
+  color: #2874F0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.order-status.confirmed,
+.order-status.delivered {
+  background: #e9f9f0;
+  color: #059669;
+}
+
+.order-status.cancelled {
+  background: #fff0f0;
+  color: #dc2626;
+}
+
+.order-meta {
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+  color: #777;
+}
+
+.order-meta strong {
+  color: #2874F0;
+  font-size: 18px;
+}
+
+.order-product {
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-product-icon {
+  background: #f4f0ff;
+  color: #2874F0;
+  padding: 17px;
+  border-radius: 12px;
+}
+
+.order-product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-product-details h4 {
+  font-size: 16px;
+}
+
+.order-product-details span {
+  color: #888;
+  font-size: 13px;
+}
+
+.order-shipping {
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-shipping span {
+  font-weight: 700;
+}
+
+.order-shipping p {
+  color: #777;
+  line-height: 1.6;
+  margin-top: 5px;
+}
+
+.order-card-footer {
+  margin-top: 18px;
+}
+
+.order-cancel-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #dc2626;
+  background: white;
+  border: 1px solid #ffc4c4;
+  border-radius: 10px;
+  padding: 13px 18px;
+  cursor: pointer;
+}
+
+.orders-empty,
+.orders-message {
+  text-align: center;
+  padding: 80px 20px;
+  color: #777;
+}
+
+.orders-empty button,
+.orders-message button {
+  margin: 20px auto;
+}
+
+@media (max-width: 650px) {
+  .orders-heading {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .order-card {
+    padding: 18px;
+  }
+
+  .order-card-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .order-card-footer button {
+    width: 100%;
+  }
+
+  .order-product {
+    flex-wrap: wrap;
+  }
+}
+
+
+.payment-alert {
+  padding: 15px 18px;
+  border-radius: 10px;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.payment-alert.success {
+  color: #059669;
+  background: #e9f9f0;
+}
+
+.payment-alert.error {
+  color: #dc2626;
+  background: #fff0f0;
+}
+
+.payment-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #eee;
+}
+
+.payment-complete-btn,
+.payment-fail-btn,
+.payment-refresh-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 18px;
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.payment-complete-btn {
+  color: white;
+  background: #059669;
+  border: 1px solid #059669;
+}
+
+.payment-fail-btn {
+  color: #dc2626;
+  background: white;
+  border: 1px solid #ffc4c4;
+}
+
+.payment-refresh-btn {
+  margin-top: 20px;
+  color: #2874F0;
+  background: white;
+  border: 1px solid #2874F0;
+}
+
+.payment-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .payment-actions {
+    flex-direction: column;
+  }
+
+  .payment-actions button {
+    width: 100%;
+  }
+}
+.wishlist-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: #2874F0;
+  border: 1px solid #e9e7ef;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+}
+
+.wishlist-icon-btn:hover {
+  background: #2874F0;
+  color: white;
+}
+
+.order-details-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.order-details-actions .back-orders-btn {
+  margin: 0;
+}
+
+.order-details-actions .cancel-order-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid #dc2626;
+  border-radius: 8px;
+  background: #fff;
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.order-details-actions .cancel-order-btn:hover {
+  background: #dc2626;
+  color: #fff;
+}
+
+.order-details-actions .cancel-order-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .order-details-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+/* ==========================================
+   SALESSAVVY - SHARED ADMIN DARK MODE
+   ========================================== */
+
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) {
+  color-scheme: dark;
+}
+
+/* Page backgrounds */
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-dashboard,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-page,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-categories-page,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-coupons-page,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-page {
+  background: #111923 !important;
+  color: #e8eef7 !important;
+}
+
+/* Dashboard, orders, categories, coupons and customers cards */
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-quick-card,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-summary > div,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-table-card,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-stat-card,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-form-card,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-table-card,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-stat-card,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-form-card,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-table-card,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customer-stat,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #e8eef7 !important;
+}
+
+/* Headings and important text */
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-header h1,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-section-heading h2,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-data-heading h2,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-header h1,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-table-heading h2,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .categories-heading h1,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-form-heading h2,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-table-card h2,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupons-heading h1,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-form-heading h2,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-table-card h2,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-header h1,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-table-heading h2,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-table-heading span {
+  color: #f1f5f9 !important;
+}
+
+/* Supporting text */
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-header p,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-section-heading p,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-header p,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .categories-heading p,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupons-heading p,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-header p,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-stat-card span,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-stat-card span,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customer-stat span,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-summary span {
+  color: #b8c5d6 !important;
+}
+
+/* Statistics */
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-summary strong,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-stat-card strong,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-stat-card strong,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customer-stat strong {
+  color: #f8fafc !important;
+}
+
+/* Tables */
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-table th,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-table th,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-table-card table th,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-table-card table th {
+  background: #29384c !important;
+  color: #f8fafc !important;
+  border-color: #3b4b60 !important;
+}
+
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-table td,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-table td,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-table-card table td,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-table-card table td {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-table td small,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-table td small {
+  color: #b8c5d6 !important;
+}
+
+/* Search boxes, dropdowns and form controls */
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-page input,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-page select,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-controls input,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-controls select,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-form-card input,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-form-card select,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-form-card textarea,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-form-card input,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-form-card select,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-form-card textarea {
+  background: #263548 !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) input::placeholder,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) textarea::placeholder {
+  color: #a8b6c8 !important;
+}
+
+/* Order statuses */
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-order-status {
+  color: #dbeafe !important;
+}
+
+/* Keep action buttons readable */
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-orders-table button,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-customers-table button,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .category-table-card button,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .coupon-table-card button {
+  color: #ffffff;
+}
+
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-data-card,
+:is(.dark, .dark-mode, .dark-theme, [data-theme="dark"]) .admin-data-table-card {
+  background: #1e293b !important;
+  color: #e8eef7 !important;
+  border-color: #334155 !important;
+}
+
+
+
+/* =====================================================
+   SALESSAVVY - FINAL DARK MODE FIX
+   Append this block at the VERY END of the global CSS
+===================================================== */
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ss-page: #111821;
+  --ss-surface: #1b2633;
+  --ss-surface-soft: #222f3e;
+  --ss-border: #344354;
+  --ss-ink: #edf3fa;
+  --ss-muted: #b4c1d0;
+}
+
+/* 1. ADMIN PAGE BACKGROUNDS */
+:root[data-theme="dark"] .admin-dashboard,
+:root[data-theme="dark"] .admin-orders-page,
+:root[data-theme="dark"] .admin-products,
+:root[data-theme="dark"] .admin-categories-page,
+:root[data-theme="dark"] .admin-coupons-page,
+:root[data-theme="dark"] .admin-customers-page,
+:root[data-theme="dark"] .admin-reviews-page {
+  background: var(--ss-page) !important;
+  color: var(--ss-ink) !important;
+}
+
+/* 2. DASHBOARD - FIX THE WHITE RECENT ORDERS PANEL */
+:root[data-theme="dark"] .admin-data-section,
+:root[data-theme="dark"] .admin-data-card,
+:root[data-theme="dark"] .admin-data-table-card,
+:root[data-theme="dark"] .admin-stat-card,
+:root[data-theme="dark"] .admin-quick-card,
+:root[data-theme="dark"] .admin-orders-table-card,
+:root[data-theme="dark"] .admin-product-form-section,
+:root[data-theme="dark"] .admin-products-table-section,
+:root[data-theme="dark"] .category-stat-card,
+:root[data-theme="dark"] .category-form-card,
+:root[data-theme="dark"] .category-table-card,
+:root[data-theme="dark"] .coupon-stat-card,
+:root[data-theme="dark"] .coupon-form-card,
+:root[data-theme="dark"] .coupon-table-card,
+:root[data-theme="dark"] .admin-customer-stat,
+:root[data-theme="dark"] .admin-customers-card {
+  background: var(--ss-surface) !important;
+  color: var(--ss-ink) !important;
+  border: 1px solid var(--ss-border) !important;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Dashboard headings */
+:root[data-theme="dark"] .admin-header h1,
+:root[data-theme="dark"] .admin-section-heading h2,
+:root[data-theme="dark"] .admin-data-heading h2,
+:root[data-theme="dark"] .admin-orders-header h1,
+:root[data-theme="dark"] .admin-orders-table-heading h2,
+:root[data-theme="dark"] .categories-heading h1,
+:root[data-theme="dark"] .coupons-heading h1,
+:root[data-theme="dark"] .admin-customers-header h1 {
+  color: #f1f5f9 !important;
+}
+
+:root[data-theme="dark"] .admin-header p,
+:root[data-theme="dark"] .admin-section-heading p,
+:root[data-theme="dark"] .admin-orders-header p,
+:root[data-theme="dark"] .categories-heading p,
+:root[data-theme="dark"] .coupons-heading p,
+:root[data-theme="dark"] .admin-customers-header p,
+:root[data-theme="dark"] .admin-data-heading .eyebrow {
+  color: #b4c1d0 !important;
+}
+
+/* Dashboard quick-action cards */
+:root[data-theme="dark"] .admin-quick-info strong,
+:root[data-theme="dark"] .admin-quick-info small,
+:root[data-theme="dark"] .admin-quick-arrow {
+  color: #edf3fa !important;
+}
+
+:root[data-theme="dark"] .admin-quick-icon {
+  background: #263b55 !important;
+  color: #75adff !important;
+}
+
+/* 3. DASHBOARD TABLES */
+:root[data-theme="dark"] .admin-table,
+:root[data-theme="dark"] .admin-orders-table,
+:root[data-theme="dark"] .admin-customers-table,
+:root[data-theme="dark"] .admin-products-table,
+:root[data-theme="dark"] .category-table-card table,
+:root[data-theme="dark"] .coupon-table-card table {
+  background: var(--ss-surface) !important;
+  color: var(--ss-ink) !important;
+  border-color: var(--ss-border) !important;
+}
+
+:root[data-theme="dark"] .admin-table th,
+:root[data-theme="dark"] .admin-orders-table th,
+:root[data-theme="dark"] .admin-customers-table th,
+:root[data-theme="dark"] .admin-products-table th,
+:root[data-theme="dark"] .category-table-card table th,
+:root[data-theme="dark"] .coupon-table-card table th {
+  background: #29384c !important;
+  color: #f8fafc !important;
+  border-color: #3b4b60 !important;
+}
+
+:root[data-theme="dark"] .admin-table td,
+:root[data-theme="dark"] .admin-orders-table td,
+:root[data-theme="dark"] .admin-customers-table td,
+:root[data-theme="dark"] .admin-products-table td,
+:root[data-theme="dark"] .category-table-card table td,
+:root[data-theme="dark"] .coupon-table-card table td {
+  background: var(--ss-surface) !important;
+  color: #e2e8f0 !important;
+  border-bottom: 1px solid var(--ss-border) !important;
+}
+
+:root[data-theme="dark"] .admin-table tbody tr:hover td,
+:root[data-theme="dark"] .admin-orders-table tbody tr:hover td,
+:root[data-theme="dark"] .admin-customers-table tbody tr:hover td,
+:root[data-theme="dark"] .admin-products-table tbody tr:hover td {
+  background: #253449 !important;
+}
+
+:root[data-theme="dark"] .admin-table td small,
+:root[data-theme="dark"] .admin-orders-table td small,
+:root[data-theme="dark"] .admin-customers-table td small {
+  color: #b4c1d0 !important;
+}
+
+/* 4. DASHBOARD ORDER STATUS BADGES */
+:root[data-theme="dark"] .admin-status,
+:root[data-theme="dark"] .admin-order-status {
+  background: #263b55 !important;
+  color: #bfdbfe !important;
+}
+
+:root[data-theme="dark"] .admin-status-confirmed,
+:root[data-theme="dark"] .admin-status-delivered,
+:root[data-theme="dark"] .admin-order-status.confirmed,
+:root[data-theme="dark"] .admin-order-status.delivered {
+  background: #16452f !important;
+  color: #a7f3c5 !important;
+}
+
+:root[data-theme="dark"] .admin-status-pending,
+:root[data-theme="dark"] .admin-order-status.pending,
+:root[data-theme="dark"] .admin-order-status.processing,
+:root[data-theme="dark"] .admin-order-status.shipped,
+:root[data-theme="dark"] .admin-order-status.out_for_delivery {
+  background: #493b18 !important;
+  color: #fde68a !important;
+}
+
+:root[data-theme="dark"] .admin-status-cancelled,
+:root[data-theme="dark"] .admin-order-status.cancelled,
+:root[data-theme="dark"] .admin-order-status.refunded {
+  background: #512b30 !important;
+  color: #fecaca !important;
+}
+
+/* 5. ADMIN PRODUCT PAGE */
+:root[data-theme="dark"] .admin-products-header h1,
+:root[data-theme="dark"] .admin-products-table-section h2,
+:root[data-theme="dark"] .admin-product-form-heading h2 {
+  color: #f1f5f9 !important;
+}
+
+:root[data-theme="dark"] .admin-product-summary div {
+  background: var(--ss-surface) !important;
+  border-color: var(--ss-border) !important;
+}
+
+:root[data-theme="dark"] .admin-product-summary span {
+  color: #b4c1d0 !important;
+}
+
+:root[data-theme="dark"] .admin-product-summary strong {
+  color: #f8fafc !important;
+}
+
+:root[data-theme="dark"] .admin-product-form label {
+  color: #e2e8f0 !important;
+}
+
+/* 6. CATEGORY STATUS BADGES */
+:root[data-theme="dark"] .category-status.active,
+:root[data-theme="dark"] .admin-product-status.active,
+:root[data-theme="dark"] .admin-stock-status.in-stock {
+  background: #16452f !important;
+  color: #a7f3c5 !important;
+}
+
+:root[data-theme="dark"] .category-status.inactive,
+:root[data-theme="dark"] .admin-product-status.inactive,
+:root[data-theme="dark"] .admin-stock-status.out-of-stock {
+  background: #512b30 !important;
+  color: #fecaca !important;
+}
+
+:root[data-theme="dark"] .admin-stock-status.low-stock {
+  background: #493b18 !important;
+  color: #fde68a !important;
+}
+
+/* 7. COUPON STATUS BADGES */
+:root[data-theme="dark"] .coupon-status.active,
+:root[data-theme="dark"] .coupon-status-active {
+  background: #16452f !important;
+  color: #a7f3c5 !important;
+}
+
+:root[data-theme="dark"] .coupon-status.inactive,
+:root[data-theme="dark"] .coupon-status-inactive {
+  background: #512b30 !important;
+  color: #fecaca !important;
+}
+
+/* 8. SEARCH, FILTERS AND FORM FIELDS */
+:root[data-theme="dark"] .admin-dashboard input,
+:root[data-theme="dark"] .admin-orders-page input,
+:root[data-theme="dark"] .admin-orders-page select,
+:root[data-theme="dark"] .admin-products-toolbar input,
+:root[data-theme="dark"] .admin-products-toolbar select,
+:root[data-theme="dark"] .category-form-card input,
+:root[data-theme="dark"] .category-form-card select,
+:root[data-theme="dark"] .category-form-card textarea,
+:root[data-theme="dark"] .coupon-form-card input,
+:root[data-theme="dark"] .coupon-form-card select,
+:root[data-theme="dark"] .coupon-form-card textarea,
+:root[data-theme="dark"] .admin-customers-controls input,
+:root[data-theme="dark"] .admin-customers-controls select {
+  background: #263548 !important;
+  color: #f8fafc !important;
+  border: 1px solid #475569 !important;
+}
+
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder {
+  color: #a8b6c8 !important;
+}
+
+:root[data-theme="dark"] select option {
+  background: #1b2633 !important;
+  color: #edf3fa !important;
+}
+
+/* 9. ADMIN ACTION BUTTONS */
+:root[data-theme="dark"] .category-edit-btn,
+:root[data-theme="dark"] .admin-product-actions button:not(.admin-deactivate-button):not(.admin-activate-button),
+:root[data-theme="dark"] .admin-pagination-controls button {
+  background: #1d4ed8 !important;
+  color: #ffffff !important;
+  border: 1px solid #3b82f6 !important;
+}
+
+:root[data-theme="dark"] .category-deactivate-btn,
+:root[data-theme="dark"] .admin-product-actions .admin-deactivate-button {
+  background: #7f1d1d !important;
+  color: #fecaca !important;
+  border: 1px solid #991b1b !important;
+}
+
+:root[data-theme="dark"] .category-activate-btn,
+:root[data-theme="dark"] .admin-product-actions .admin-activate-button {
+  background: #14532d !important;
+  color: #bbf7d0 !important;
+  border: 1px solid #166534 !important;
+}
+
+:root[data-theme="dark"] .admin-pagination-controls button.selected {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+/* Keep disabled controls visibly disabled */
+:root[data-theme="dark"] button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* 10. TABLE BORDERS, EMPTY STATES AND FOOTERS */
+:root[data-theme="dark"] .admin-products-pagination {
+  border-top-color: var(--ss-border) !important;
+}
+
+:root[data-theme="dark"] .admin-pagination-info,
+:root[data-theme="dark"] .admin-empty,
+:root[data-theme="dark"] .admin-loading,
+:root[data-theme="dark"] .admin-dashboard-footer {
+  color: #b4c1d0 !important;
+}
+
+:root[data-theme="dark"] .admin-error {
+  background: #512b30 !important;
+  color: #fecaca !important;
+  border-color: #7f1d1d !important;
+}
+
+:root[data-theme="dark"] .admin-success {
+  background: #16452f !important;
+  color: #a7f3c5 !important;
+  border-color: #166534 !important;
+}

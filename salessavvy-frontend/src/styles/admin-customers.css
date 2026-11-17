@@ -1,0 +1,510 @@
+/* =========================================================
+   ADMIN CUSTOMER MANAGEMENT
+   Light and Dark Mode - aligned with Coupon Management UI
+   ========================================================= */
+
+/* ---------- Page ---------- */
+
+.admin-customers-page {
+    --customer-page-bg: #f5f6fa;
+    --customer-text: #20202b;
+    --customer-muted: #85838f;
+    --customer-card-bg: #ffffff;
+    --customer-border: #e9e5f1;
+    --customer-input-bg: #ffffff;
+    --customer-input-border: #dedbe8;
+    --customer-table-head-bg: #f7f6fa;
+    --customer-table-head-text: #666371;
+    --customer-row-border: #eeeaf3;
+    --customer-row-hover: #faf9fc;
+
+    box-sizing: border-box;
+    max-width: 1500px;
+    min-height: 70vh;
+    margin: 0 auto;
+    padding: 55px 6%;
+    color: var(--customer-text);
+    background: var(--customer-page-bg);
+}
+
+body.dark-mode .admin-customers-page {
+    --customer-page-bg: #1b2938;
+    --customer-text: #f1f5f9;
+    --customer-muted: #aab8c8;
+    --customer-card-bg: #1b2938;
+    --customer-border: #344456;
+    --customer-input-bg: #223143;
+    --customer-input-border: #42546a;
+    --customer-table-head-bg: #293b50;
+    --customer-table-head-text: #f1f5f9;
+    --customer-row-border: #344456;
+    --customer-row-hover: #223143;
+}
+
+/* ---------- Header ---------- */
+
+.admin-customers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 38px;
+}
+
+.admin-customers-eyebrow {
+    color: #2874f0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.admin-customers-header h1 {
+    margin: 15px 0 8px;
+    color: var(--customer-text);
+    font-size: 36px;
+    font-weight: 750;
+}
+
+.admin-customers-header p {
+    margin: 0;
+    color: var(--customer-muted);
+    font-size: 16px;
+}
+
+.admin-customers-refresh {
+    padding: 14px 22px;
+    border: 1px solid #2874f0;
+    border-radius: 9px;
+    background: #2874f0;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.admin-customers-refresh:hover {
+    background: #1762d5;
+    border-color: #1762d5;
+    transform: translateY(-1px);
+}
+
+.admin-customers-refresh:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ---------- Statistics ---------- */
+
+.admin-customers-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.admin-customer-stat {
+    padding: 25px;
+    border: 1px solid var(--customer-border);
+    border-radius: 13px;
+    background: var(--customer-card-bg);
+}
+
+.admin-customer-stat span {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--customer-muted);
+    font-size: 14px;
+}
+
+.admin-customer-stat strong {
+    color: var(--customer-text);
+    font-size: 30px;
+}
+
+/* ---------- Main card ---------- */
+
+.admin-customers-card {
+    padding: 27px;
+    border: 1px solid var(--customer-border);
+    border-radius: 14px;
+    background: var(--customer-card-bg);
+}
+
+/* ---------- Search and filter ---------- */
+
+.admin-customers-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.admin-customers-controls input,
+.admin-customers-controls select {
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 14px 16px;
+    border: 1px solid var(--customer-input-border);
+    border-radius: 9px;
+    outline: none;
+    background: var(--customer-input-bg);
+    color: var(--customer-text);
+    font: inherit;
+    font-size: 14px;
+}
+
+.admin-customers-controls input {
+    flex: 1;
+}
+
+.admin-customers-controls input::placeholder {
+    color: var(--customer-muted);
+}
+
+.admin-customers-controls select {
+    min-width: 190px;
+}
+
+.admin-customers-controls input:focus,
+.admin-customers-controls select:focus {
+    border-color: #2874f0;
+    box-shadow: 0 0 0 3px rgba(40, 116, 240, 0.1);
+}
+
+.admin-customers-controls select option {
+    background: var(--customer-input-bg);
+    color: var(--customer-text);
+}
+
+/* ---------- Table heading ---------- */
+
+.admin-customers-table-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+.admin-customers-table-heading h2 {
+    margin: 0;
+    color: var(--customer-text);
+    font-size: 21px;
+}
+
+.admin-customers-table-heading span {
+    color: var(--customer-muted);
+    font-size: 14px;
+}
+
+/* ---------- Table ---------- */
+
+.admin-customers-table-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-customers-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-customers-table th {
+    padding: 17px 15px;
+    background: var(--customer-table-head-bg);
+    color: var(--customer-table-head-text);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.admin-customers-table td {
+    padding: 19px 15px;
+    border-bottom: 1px solid var(--customer-row-border);
+    color: var(--customer-text);
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.admin-customers-table td strong {
+    color: var(--customer-text);
+}
+
+.admin-customers-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.admin-customers-table tbody tr:hover {
+    background: var(--customer-row-hover);
+}
+
+/* ---------- Status badges ---------- */
+
+.admin-customer-status {
+    display: inline-block;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.admin-customer-status.active {
+    background: #e8f8ef;
+    color: #07834b;
+}
+
+.admin-customer-status.inactive {
+    background: #fff0ef;
+    color: #d12c2c;
+}
+
+body.dark-mode .admin-customer-status.active {
+    background: #14532d;
+    color: #86efac;
+}
+
+body.dark-mode .admin-customer-status.inactive {
+    background: #7f1d1d;
+    color: #fecaca;
+}
+
+/* ---------- Action buttons ---------- */
+
+.admin-customer-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.admin-customer-action,
+.admin-customer-view {
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+    white-space: nowrap;
+}
+
+.admin-customer-view {
+    background: #2874f0;
+    color: #ffffff;
+    border-color: #2874f0;
+}
+
+.admin-customer-view:hover {
+    background: #1762d5;
+    border-color: #1762d5;
+}
+
+/* The action class reflects the action available for the customer. */
+.admin-customer-action.activate {
+    background: #e8f8ef;
+    color: #07834b;
+    border-color: #d1f0df;
+}
+
+.admin-customer-action.activate:hover {
+    filter: brightness(0.96);
+}
+
+.admin-customer-action.deactivate {
+    background: #fff0ef;
+    color: #d12c2c;
+    border-color: #ffe0e0;
+}
+
+.admin-customer-action.deactivate:hover {
+    filter: brightness(0.96);
+}
+
+body.dark-mode .admin-customer-action.activate {
+    background: #145c3c;
+    color: #a7f3d0;
+    border-color: #237b53;
+}
+
+body.dark-mode .admin-customer-action.deactivate {
+    background: #762c32;
+    color: #fecaca;
+    border-color: #a33b43;
+}
+
+.admin-customer-action:disabled,
+.admin-customer-view:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ---------- Messages ---------- */
+
+.admin-customers-message {
+    padding: 30px 10px;
+    color: var(--customer-muted);
+    text-align: center;
+}
+
+.admin-customers-error {
+    padding: 20px;
+    border-radius: 9px;
+    background: #fff0ef;
+    color: #b42318;
+}
+
+body.dark-mode .admin-customers-error {
+    background: #7f1d1d;
+    color: #fecaca;
+}
+
+.admin-customers-error button {
+    margin-left: 15px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #2874f0;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* ---------- Pagination ---------- */
+
+.admin-customers-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--customer-border);
+    color: var(--customer-muted);
+    font-size: 14px;
+}
+
+.admin-customers-pagination div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-customers-pagination button {
+    padding: 9px 14px;
+    border: 1px solid var(--customer-input-border);
+    border-radius: 8px;
+    background: var(--customer-input-bg);
+    color: var(--customer-text);
+    cursor: pointer;
+}
+
+.admin-customers-pagination button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+    .admin-customers-page {
+        padding: 40px 4%;
+    }
+
+    .admin-customers-header h1 {
+        font-size: 30px;
+    }
+
+    .admin-customer-actions {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 700px) {
+    .admin-customers-page {
+        padding: 35px 5%;
+    }
+
+    .admin-customers-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-customers-header h1 {
+        font-size: 27px;
+    }
+
+    .admin-customers-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-customers-controls {
+        flex-direction: column;
+    }
+
+    .admin-customers-controls select {
+        width: 100%;
+    }
+
+    .admin-customers-card {
+        padding: 18px;
+    }
+
+    .admin-customers-pagination {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* Fix customer status badges in Dark Mode */
+
+body.dark-mode .admin-customers-page .admin-customer-status.active {
+    background: #14532d !important;
+    color: #86efac !important;
+}
+
+body.dark-mode .admin-customers-page .admin-customer-status.inactive {
+    background: #7f1d1d !important;
+    color: #fecaca !important;
+}
+
+/* Light Mode */
+
+body:not(.dark-mode) .admin-customers-page .admin-customer-status.active {
+    background: #e8f8ef;
+    color: #07834b;
+}
+
+body:not(.dark-mode) .admin-customers-page .admin-customer-status.inactive {
+    background: #fff0ef;
+    color: #d12c2c;
+}
+/* Customer Status - Light Mode */
+
+.admin-customer-status.active {
+    background: #e8f8ef;
+    color: #07834b;
+}
+
+.admin-customer-status.inactive {
+    background: #fff0ef;
+    color: #d12c2c;
+}
+
+/* Customer Status - Dark Mode */
+
+.dark-mode .admin-customer-status.active,
+body.dark-mode .admin-customer-status.active {
+    background: #145c3c !important;
+    color: #a7f3d0 !important;
+}
+
+.dark-mode .admin-customer-status.inactive,
+body.dark-mode .admin-customer-status.inactive {
+    background: #762c32 !important;
+    color: #fecaca !important;
+}

@@ -1,0 +1,631 @@
+/* SalesSavvy storefront system: consistent retail layout, light/dark themes */
+:root {
+  color-scheme: light;
+  --ss-blue: #1769d2;
+  --ss-blue-dark: #0d4fa8;
+  --ss-accent: #ffcc00;
+  --ss-page: #f4f6f8;
+  --ss-surface: #ffffff;
+  --ss-surface-soft: #f7f9fc;
+  --ss-border: #e2e7ee;
+  --ss-ink: #172337;
+  --ss-muted: #66758a;
+  --ss-shadow: 0 2px 8px rgba(20, 35, 55, .06);
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ss-blue: #75adff;
+  --ss-blue-dark: #9ac2ff;
+  --ss-accent: #ffcf45;
+  --ss-page: #111821;
+  --ss-surface: #1b2633;
+  --ss-surface-soft: #222f3e;
+  --ss-border: #344354;
+  --ss-ink: #edf3fa;
+  --ss-muted: #aab8c8;
+  --ss-shadow: 0 3px 14px rgba(0, 0, 0, .22);
+}
+html, body, #root { min-height: 100%; }
+html { background: var(--ss-page); }
+body { background: var(--ss-page); color: var(--ss-ink); font-family: 'DM Sans', Arial, sans-serif; line-height: 1.5; transition: background .2s ease, color .2s ease; }
+button, input, select, textarea { font: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ss-accent); outline-offset: 2px; }
+main { min-height: 65vh; background: var(--ss-page); color: var(--ss-ink); }
+
+/* Shared navigation */
+.ss-navbar { background: var(--ss-surface); border-bottom: 1px solid var(--ss-border); box-shadow: var(--ss-shadow); }
+.ss-nav-container { min-height: 70px; }
+.ss-logo { color: var(--ss-ink); }
+.ss-logo span { color: var(--ss-blue); }
+.ss-nav-links > a, .ss-management-trigger, .ss-nav-actions button, .ss-nav-actions > a, .ss-nav-actions svg, .ss-user-label { color: var(--ss-ink); }
+.ss-nav-links > a:hover, .ss-management-trigger:hover, .ss-management-trigger.active { color: var(--ss-blue); }
+.ss-management-menu { background: var(--ss-surface); border-color: var(--ss-border); }
+.ss-management-menu a { color: var(--ss-ink); }
+.ss-management-menu a:hover { color: var(--ss-blue); background: var(--ss-surface-soft); }
+.ss-search-form input { background: var(--ss-surface); color: var(--ss-ink); border-color: var(--ss-border); }
+.ss-search-form button { background: var(--ss-blue); color: #fff; }
+
+/* Home page: compact hero, category discovery, limited featured row */
+.ss-home { padding-bottom: 54px; }
+.ss-home-hero { width: min(1440px, 94%); min-height: 430px; margin: 24px auto 0; padding: clamp(28px, 4vw, 58px); display: grid; grid-template-columns: 1fr 1.02fr; align-items: center; gap: clamp(24px, 4vw, 64px); background: var(--ss-surface); border: 1px solid var(--ss-border); border-radius: 12px; box-shadow: var(--ss-shadow); }
+.ss-hero-copy { max-width: 590px; }
+.ss-kicker, .ss-section-kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--ss-blue); font-size: 11px; font-weight: 800; letter-spacing: 1.4px; }
+.ss-hero-copy h1 { margin: 20px 0 14px; color: var(--ss-ink); font: 800 clamp(38px, 4.8vw, 62px)/1.08 Manrope, sans-serif; letter-spacing: -2.4px; }
+.ss-hero-copy h1 span { color: var(--ss-blue); }
+.ss-hero-copy > p { max-width: 490px; margin-bottom: 25px; color: var(--ss-muted); font-size: 16px; line-height: 1.8; }
+.ss-hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.ss-primary-cta, .ss-secondary-cta { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 19px; border-radius: 7px; font-size: 14px; font-weight: 700; }
+.ss-primary-cta { background: var(--ss-blue); color: #fff; }
+.ss-primary-cta:hover { background: var(--ss-blue-dark); }
+.ss-secondary-cta { border: 1px solid var(--ss-border); color: var(--ss-ink); background: var(--ss-surface); }
+.ss-secondary-cta:hover { background: var(--ss-surface-soft); }
+.ss-trust-line { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 28px; color: var(--ss-muted); font-size: 12px; }
+.ss-trust-line span { display: inline-flex; align-items: center; gap: 7px; }
+.ss-trust-line svg { color: var(--ss-blue); }
+.ss-hero-visual { position: relative; min-width: 0; }
+.ss-hero-visual > img { width: 100%; height: 330px; object-fit: cover; border-radius: 9px; }
+.ss-hero-note { position: absolute; left: -18px; bottom: 18px; display: flex; align-items: center; gap: 12px; padding: 13px 17px; background: var(--ss-surface); border: 1px solid var(--ss-border); border-radius: 9px; box-shadow: 0 8px 24px #00000018; }
+.ss-note-icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: var(--ss-surface-soft); color: var(--ss-blue); font-size: 21px; }
+.ss-hero-note strong, .ss-hero-note small { display: block; }
+.ss-hero-note strong { color: var(--ss-ink); font-size: 13px; }
+.ss-hero-note small { color: var(--ss-muted); font-size: 11px; }
+.ss-service-strip { width: min(1440px, 94%); margin: 18px auto 0; padding: 18px 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; background: var(--ss-surface); border: 1px solid var(--ss-border); border-radius: 9px; }
+.ss-service-strip > div { display: flex; align-items: center; justify-content: center; gap: 11px; }
+.ss-service-strip svg { width: 22px; height: 22px; color: var(--ss-blue); flex-shrink: 0; }
+.ss-service-strip strong, .ss-service-strip small { display: block; }
+.ss-service-strip strong { color: var(--ss-ink); font-size: 12px; }
+.ss-service-strip small { color: var(--ss-muted); font-size: 11px; }
+.ss-home-section { width: min(1440px, 94%); margin: 46px auto 0; }
+.ss-section-title { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 20px; }
+.ss-section-title h2 { margin: 5px 0 2px; color: var(--ss-ink); font: 800 27px/1.25 Manrope, sans-serif; letter-spacing: -.6px; }
+.ss-section-title p { color: var(--ss-muted); font-size: 13px; }
+.ss-section-title > a { display: inline-flex; align-items: center; gap: 7px; color: var(--ss-blue); font-size: 13px; font-weight: 700; white-space: nowrap; }
+.ss-category-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.ss-category-tile { min-height: 88px; padding: 14px; display: flex; align-items: center; gap: 12px; text-align: left; background: var(--ss-surface); border: 1px solid var(--ss-border); border-radius: 8px; color: var(--ss-ink); transition: border-color .18s, transform .18s, box-shadow .18s; }
+.ss-category-tile:hover { border-color: var(--ss-blue); transform: translateY(-2px); box-shadow: var(--ss-shadow); }
+.ss-category-icon { width: 43px; height: 43px; display: grid; place-items: center; flex-shrink: 0; border-radius: 8px; background: var(--ss-surface-soft); font-size: 23px; }
+.ss-category-text { min-width: 0; flex: 1; }
+.ss-category-text strong, .ss-category-text small { display: block; }
+.ss-category-text strong { font-size: 13px; }
+.ss-category-text small { margin-top: 3px; color: var(--ss-muted); font-size: 10px; }
+.ss-category-tile > svg { color: var(--ss-blue); flex-shrink: 0; }
+.ss-featured-section { margin-top: 48px; }
+.ss-featured-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.ss-featured-grid .product-card { min-width: 0; }
+.ss-state-message { padding: 28px; color: var(--ss-muted); background: var(--ss-surface); border: 1px solid var(--ss-border); border-radius: 8px; }
+.ss-error-message { color: #d64545; }
+.ss-browse-all { margin-top: 18px; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 15px; background: var(--ss-surface); border: 1px solid var(--ss-border); border-radius: 8px; color: var(--ss-muted); font-size: 13px; }
+.ss-browse-all a { display: inline-flex; align-items: center; gap: 8px; color: var(--ss-blue); font-weight: 700; white-space: nowrap; }
+.ss-bottom-promo { width: min(1440px, 94%); margin: 44px auto 0; padding: 26px 30px; display: flex; align-items: center; justify-content: space-between; gap: 22px; background: var(--ss-surface-soft); border: 1px solid var(--ss-border); border-radius: 9px; }
+.ss-bottom-promo h2 { margin: 5px 0; font: 800 23px Manrope, sans-serif; }
+.ss-bottom-promo p { color: var(--ss-muted); font-size: 13px; }
+
+/* Deals: meaningful offer hierarchy and honest empty states */
+.ss-deals-page { padding: 28px 0 70px; }
+.ss-deals-hero { width: min(1440px, 94%); min-height: 260px; margin: 0 auto 38px; padding: 35px 42px; display: flex; align-items: center; justify-content: space-between; gap: 30px; background: linear-gradient(110deg, #123d70, #1769d2); border-radius: 11px; color: white; }
+.ss-deals-hero .ss-section-kicker { color: #ffdb65; }
+.ss-deals-hero h1 { margin: 12px 0; font: 800 clamp(34px, 4vw, 48px)/1.08 Manrope, sans-serif; letter-spacing: -1.4px; }
+.ss-deals-hero h1 span { color: #ffdc67; }
+.ss-deals-hero p { max-width: 570px; color: #e2edfc; font-size: 14px; line-height: 1.7; }
+.ss-deals-hero-art { width: 190px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border: 1px solid #ffffff55; border-radius: 12px; background: #ffffff12; color: #ffdc67; font-weight: 700; }
+.ss-deals-content { width: min(1440px, 94%); margin: auto; }
+.ss-coupon-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.ss-coupon-card { min-height: 142px; padding: 18px; display: flex; align-items: flex-start; gap: 14px; background: var(--ss-surface); border: 1px dashed var(--ss-blue); border-radius: 9px; }
+.ss-coupon-icon, .ss-no-offers-icon { width: 42px; height: 42px; display: grid; place-items: center; flex-shrink: 0; border-radius: 8px; background: var(--ss-surface-soft); color: var(--ss-blue); }
+.ss-coupon-info { min-width: 0; flex: 1; }
+.ss-coupon-label { color: var(--ss-blue); font-size: 9px; font-weight: 800; letter-spacing: 1px; }
+.ss-coupon-info h3 { margin: 4px 0; color: var(--ss-ink); font-size: 19px; letter-spacing: 1px; }
+.ss-coupon-info p, .ss-coupon-info small { color: var(--ss-muted); font-size: 11px; }
+.ss-coupon-info small { display: block; margin-top: 8px; font-weight: 700; }
+.ss-coupon-status { padding: 4px 8px; border-radius: 20px; background: #e7f7ee; color: #187847; font-size: 10px; font-weight: 700; }
+.ss-price-deals-heading { margin-top: 42px; }
+.ss-no-offers { margin: 0 0 24px; padding: 22px; display: flex; align-items: center; gap: 15px; background: var(--ss-surface); border: 1px solid var(--ss-border); border-radius: 9px; }
+.ss-no-offers h3 { margin-bottom: 4px; color: var(--ss-ink); font-size: 15px; }
+.ss-no-offers p { color: var(--ss-muted); font-size: 12px; }
+.ss-no-offers a { display: inline-flex; align-items: center; gap: 7px; margin-top: 10px; color: var(--ss-blue); font-size: 12px; font-weight: 700; }
+.ss-deal-product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.ss-deal-product { overflow: hidden; background: var(--ss-surface); border: 1px solid var(--ss-border); border-radius: 8px; }
+.ss-deal-product-image { position: relative; display: block; padding: 12px; background: var(--ss-surface-soft); }
+.ss-deal-product-image img { width: 100%; height: 190px; object-fit: contain; }
+.ss-deal-product-image span { position: absolute; top: 12px; left: 12px; padding: 5px 8px; border-radius: 4px; background: #d92d20; color: white; font-size: 10px; font-weight: 800; }
+.ss-deal-product-info { padding: 14px; }
+.ss-deal-product-info small { color: var(--ss-muted); font-size: 10px; }
+.ss-deal-product-info h3 { min-height: 40px; margin: 5px 0 12px; color: var(--ss-ink); font-size: 13px; }
+.ss-deal-product-info > div { display: flex; align-items: center; gap: 9px; }
+.ss-deal-product-info strong { color: var(--ss-blue); font-size: 17px; }
+.ss-deal-product-info del { color: var(--ss-muted); font-size: 11px; }
+
+/* Shared existing pages: use theme tokens for primary surfaces */
+.section, .products-section, .orders-page, .order-details-page, .cart-page, .wishlist-page, .admin-page, .admin-dashboard-page { color: var(--ss-ink); }
+.product-card, .deal-card, .auth-card, .cart-item, .cart-summary, .order-card, .order-detail-card, .wishlist-card, .customer-card, .admin-card, .product-filters, .category-card { background: var(--ss-surface); border-color: var(--ss-border); color: var(--ss-ink); box-shadow: var(--ss-shadow); }
+.product-info h3, .deal-card h3, .section-heading h2, .orders-heading h1, .order-details-heading h1, .cart-heading h1 { color: var(--ss-ink); }
+.product-info p, .product-info small, .cart-heading p, .order-details-heading p { color: var(--ss-muted); }
+.product-bottom strong, .deal-card strong, .deal-prices strong, .section-heading > a { color: var(--ss-blue); }
+.product-image, .deal-image { background: var(--ss-surface-soft); }
+.auth-page { background: var(--ss-page); }
+.auth-card input, input, select, textarea { background-color: var(--ss-surface); color: var(--ss-ink); border-color: var(--ss-border); }
+.footer { background: #142235; }
+
+/* Dark mode coverage for component styles that historically used hard-coded white */
+:root[data-theme="dark"] .ss-management-menu,
+:root[data-theme="dark"] .ss-nav-links,
+:root[data-theme="dark"] .ss-search-form,
+:root[data-theme="dark"] .product-card,
+:root[data-theme="dark"] .deal-card,
+:root[data-theme="dark"] .cart-item,
+:root[data-theme="dark"] .cart-summary,
+:root[data-theme="dark"] .order-card,
+:root[data-theme="dark"] .order-detail-card,
+:root[data-theme="dark"] .auth-card,
+:root[data-theme="dark"] .wishlist-card,
+:root[data-theme="dark"] .product-filters,
+:root[data-theme="dark"] .admin-card,
+:root[data-theme="dark"] .category-card { background: var(--ss-surface); color: var(--ss-ink); border-color: var(--ss-border); }
+:root[data-theme="dark"] .cart-summary,
+:root[data-theme="dark"] .cart-page,
+:root[data-theme="dark"] .orders-page,
+:root[data-theme="dark"] .order-details-page,
+:root[data-theme="dark"] .wishlist-page,
+:root[data-theme="dark"] .admin-dashboard-page,
+:root[data-theme="dark"] .admin-products-page,
+:root[data-theme="dark"] .admin-orders-page,
+:root[data-theme="dark"] .admin-categories-page,
+:root[data-theme="dark"] .admin-coupons-page,
+:root[data-theme="dark"] .admin-customers-page,
+:root[data-theme="dark"] .admin-reviews-page { background: var(--ss-page); color: var(--ss-ink); }
+:root[data-theme="dark"] .product-info h3,
+:root[data-theme="dark"] .cart-item-details h3,
+:root[data-theme="dark"] .cart-summary h2,
+:root[data-theme="dark"] .summary-total,
+:root[data-theme="dark"] .empty-cart h2,
+:root[data-theme="dark"] .admin-dashboard-page h1,
+:root[data-theme="dark"] .admin-products-page h1,
+:root[data-theme="dark"] .admin-orders-page h1,
+:root[data-theme="dark"] .admin-categories-page h1,
+:root[data-theme="dark"] .admin-coupons-page h1,
+:root[data-theme="dark"] .admin-customers-page h1,
+:root[data-theme="dark"] .admin-reviews-page h1 { color: var(--ss-ink); }
+:root[data-theme="dark"] .ss-coupon-status { background: #153b2b; color: #8be0b0; }
+:root[data-theme="dark"] .ss-deals-hero { color: white; }
+
+@media (max-width: 1000px) {
+  .ss-home-hero { grid-template-columns: 1fr 1fr; }
+  .ss-category-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ss-featured-grid, .ss-deal-product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ss-coupon-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .ss-home-hero { grid-template-columns: 1fr; padding: 28px; }
+  .ss-hero-visual > img { height: 250px; }
+  .ss-hero-note { left: 10px; }
+  .ss-service-strip { grid-template-columns: repeat(2, 1fr); padding: 16px; }
+  .ss-service-strip > div { justify-content: flex-start; }
+  .ss-category-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ss-featured-grid, .ss-deal-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+  .ss-section-title { align-items: flex-start; }
+  .ss-section-title h2 { font-size: 23px; }
+  .ss-browse-all, .ss-bottom-promo { align-items: flex-start; flex-direction: column; }
+  .ss-deals-hero { padding: 27px; }
+  .ss-deals-hero-art { width: 120px; height: 120px; flex-shrink: 0; }
+  .ss-coupon-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .ss-home-hero, .ss-service-strip, .ss-home-section, .ss-bottom-promo, .ss-deals-hero, .ss-deals-content { width: 92%; }
+  .ss-home-hero { padding: 22px; }
+  .ss-hero-copy h1 { letter-spacing: -1.4px; }
+  .ss-service-strip { gap: 14px 8px; }
+  .ss-service-strip strong { font-size: 11px; }
+  .ss-service-strip small { font-size: 9px; }
+  .ss-category-row { gap: 8px; }
+  .ss-category-tile { padding: 10px; gap: 8px; }
+  .ss-category-icon { width: 34px; height: 34px; font-size: 18px; }
+  .ss-category-text strong { font-size: 11px; }
+  .ss-category-text small { font-size: 9px; }
+  .ss-section-title { flex-direction: column; align-items: flex-start; }
+  .ss-deals-hero { flex-direction: column; align-items: flex-start; }
+  .ss-deals-hero-art { display: none; }
+}
+:root[data-theme="dark"] .ss-nav-links { background: var(--ss-surface); border-color: var(--ss-border); }
+:root[data-theme="dark"] .ss-mobile-toggle,
+:root[data-theme="dark"] .ss-nav-actions button,
+:root[data-theme="dark"] .ss-nav-actions > a { color: var(--ss-ink); }
+:root[data-theme="dark"] .auth-card input,
+:root[data-theme="dark"] .cart-item,
+:root[data-theme="dark"] .quantity-control button,
+:root[data-theme="dark"] .continue-shopping-btn { background: var(--ss-surface); color: var(--ss-ink); border-color: var(--ss-border); }
+
+
+/* Dark mode consistency layer: cover legacy page components as well as the new storefront. */
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] main { background: var(--ss-page) !important; color: var(--ss-ink); }
+:root[data-theme="dark"] h1,
+:root[data-theme="dark"] h2,
+:root[data-theme="dark"] h3,
+:root[data-theme="dark"] h4,
+:root[data-theme="dark"] label,
+:root[data-theme="dark"] strong,
+:root[data-theme="dark"] th { color: var(--ss-ink); }
+:root[data-theme="dark"] p,
+:root[data-theme="dark"] small,
+:root[data-theme="dark"] .muted,
+:root[data-theme="dark"] .product-category { color: var(--ss-muted); }
+:root[data-theme="dark"] .product-card,
+:root[data-theme="dark"] .auth-card,
+:root[data-theme="dark"] .cart-item,
+:root[data-theme="dark"] .cart-summary,
+:root[data-theme="dark"] .order-card,
+:root[data-theme="dark"] .order-detail-card,
+:root[data-theme="dark"] .wishlist-card,
+:root[data-theme="dark"] .product-filters,
+:root[data-theme="dark"] .no-products,
+:root[data-theme="dark"] .admin-table-container,
+:root[data-theme="dark"] .admin-section,
+:root[data-theme="dark"] .admin-card,
+:root[data-theme="dark"] .admin-stat-card,
+:root[data-theme="dark"] .admin-product-form-container,
+:root[data-theme="dark"] .admin-product-form,
+:root[data-theme="dark"] .ss-state-message,
+:root[data-theme="dark"] .ss-bottom-promo,
+:root[data-theme="dark"] .ss-coupon-card,
+:root[data-theme="dark"] .ss-no-offers { background: var(--ss-surface) !important; color: var(--ss-ink); border-color: var(--ss-border) !important; }
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] select,
+:root[data-theme="dark"] textarea { background: var(--ss-surface-soft) !important; color: var(--ss-ink) !important; border-color: var(--ss-border) !important; }
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder { color: var(--ss-muted); }
+:root[data-theme="dark"] table,
+:root[data-theme="dark"] thead,
+:root[data-theme="dark"] tbody,
+:root[data-theme="dark"] tr,
+:root[data-theme="dark"] td { color: var(--ss-ink); border-color: var(--ss-border) !important; }
+:root[data-theme="dark"] th { background: var(--ss-surface-soft) !important; }
+:root[data-theme="dark"] button:not(.ss-primary-cta):not(.ss-search-form button):not(.add-cart-btn):not(.checkout-btn):not(.orders-refresh) { border-color: var(--ss-border); }
+:root[data-theme="dark"] .cart-summary,
+:root[data-theme="dark"] .summary-total { color: var(--ss-ink); }
+:root[data-theme="dark"] .quantity-control button,
+:root[data-theme="dark"] .continue-shopping-btn,
+:root[data-theme="dark"] .order-cancel-btn,
+:root[data-theme="dark"] .payment-fail-btn,
+:root[data-theme="dark"] .payment-refresh-btn { background: var(--ss-surface-soft); color: var(--ss-ink); border-color: var(--ss-border); }
+:root[data-theme="dark"] .product-image { background: var(--ss-surface-soft); }
+:root[data-theme="dark"] .ss-hero-note { background: var(--ss-surface-soft); }
+:root[data-theme="dark"] .ss-deals-hero { color: #fff; }
+:root[data-theme="dark"] .ss-deals-hero h1,
+:root[data-theme="dark"] .ss-deals-hero p { color: #fff; }
+
+
+
+/* =========================================
+   SALESSAVVY - DARK MODE CONTRAST FIX
+   ========================================= */
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ss-page: #111821;
+  --ss-surface: #1b2633;
+  --ss-surface-soft: #222f3e;
+  --ss-border: #344354;
+  --ss-ink: #edf3fa;
+  --ss-muted: #b4c1d0;
+  --ss-blue: #75adff;
+}
+
+/* Main page backgrounds and text */
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] main,
+:root[data-theme="dark"] #root {
+  background: var(--ss-page) !important;
+  color: var(--ss-ink) !important;
+}
+
+/* All common cards and panels */
+:root[data-theme="dark"] .admin-page,
+:root[data-theme="dark"] .admin-card,
+:root[data-theme="dark"] .admin-products-page,
+:root[data-theme="dark"] .admin-orders-page,
+:root[data-theme="dark"] .admin-categories-page,
+:root[data-theme="dark"] .admin-coupons-page,
+:root[data-theme="dark"] .admin-customers-page,
+:root[data-theme="dark"] .admin-reviews-page,
+:root[data-theme="dark"] .product-card,
+:root[data-theme="dark"] .product-detail-card,
+:root[data-theme="dark"] .review-card,
+:root[data-theme="dark"] .review-form,
+:root[data-theme="dark"] .reviews-form,
+:root[data-theme="dark"] .auth-card,
+:root[data-theme="dark"] .cart-item,
+:root[data-theme="dark"] .cart-summary,
+:root[data-theme="dark"] .order-card,
+:root[data-theme="dark"] .order-detail-card,
+:root[data-theme="dark"] .wishlist-card,
+:root[data-theme="dark"] .customer-card,
+:root[data-theme="dark"] .product-filters,
+:root[data-theme="dark"] .category-card {
+  background-color: var(--ss-surface) !important;
+  color: var(--ss-ink) !important;
+  border-color: var(--ss-border) !important;
+}
+
+/* Headings and normal text */
+:root[data-theme="dark"] h1,
+:root[data-theme="dark"] h2,
+:root[data-theme="dark"] h3,
+:root[data-theme="dark"] h4,
+:root[data-theme="dark"] p,
+:root[data-theme="dark"] label,
+:root[data-theme="dark"] th,
+:root[data-theme="dark"] td,
+:root[data-theme="dark"] span,
+:root[data-theme="dark"] strong {
+  color: inherit;
+}
+
+/* Inputs, review form and text areas */
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select {
+  background-color: #222f3e !important;
+  color: #edf3fa !important;
+  border: 1px solid #46576b !important;
+}
+
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder {
+  color: #aab8c8 !important;
+  opacity: 1;
+}
+
+/* Admin tables */
+:root[data-theme="dark"] table {
+  background: var(--ss-surface) !important;
+  color: var(--ss-ink) !important;
+  border-color: var(--ss-border) !important;
+}
+
+:root[data-theme="dark"] thead,
+:root[data-theme="dark"] th {
+  background: #263548 !important;
+  color: #edf3fa !important;
+}
+
+:root[data-theme="dark"] tbody tr {
+  background: var(--ss-surface) !important;
+  color: var(--ss-ink) !important;
+}
+
+:root[data-theme="dark"] tbody tr td {
+  border-color: var(--ss-border) !important;
+}
+
+/* Text inside admin product cards and tables */
+:root[data-theme="dark"] .admin-products-page *,
+:root[data-theme="dark"] .admin-reviews-page * {
+  border-color: var(--ss-border);
+}
+
+:root[data-theme="dark"] .admin-products-page h1,
+:root[data-theme="dark"] .admin-products-page h2,
+:root[data-theme="dark"] .admin-products-page h3,
+:root[data-theme="dark"] .admin-products-page td,
+:root[data-theme="dark"] .admin-products-page label,
+:root[data-theme="dark"] .admin-reviews-page h1,
+:root[data-theme="dark"] .admin-reviews-page h2,
+:root[data-theme="dark"] .admin-reviews-page h3,
+:root[data-theme="dark"] .admin-reviews-page p,
+:root[data-theme="dark"] .admin-reviews-page label {
+  color: var(--ss-ink) !important;
+}
+
+/* Review rating and stars */
+:root[data-theme="dark"] .review-form h2,
+:root[data-theme="dark"] .review-form h3,
+:root[data-theme="dark"] .reviews-form h2,
+:root[data-theme="dark"] .reviews-form h3 {
+  color: var(--ss-ink) !important;
+}
+
+/* Secondary text */
+:root[data-theme="dark"] small,
+:root[data-theme="dark"] .text-muted,
+:root[data-theme="dark"] .muted {
+  color: var(--ss-muted) !important;
+}
+
+/* Keep buttons readable */
+:root[data-theme="dark"] button {
+  color: inherit;
+}
+
+:root[data-theme="dark"] button:disabled {
+  opacity: 0.55;
+}
+
+/* Navbar */
+:root[data-theme="dark"] .ss-navbar {
+  background: #1b2633 !important;
+  border-color: #344354 !important;
+}
+
+:root[data-theme="dark"] .ss-nav-links a,
+:root[data-theme="dark"] .ss-nav-actions button,
+:root[data-theme="dark"] .ss-user-label {
+  color: #edf3fa !important;
+}
+
+/* Preserve readable status badges */
+:root[data-theme="dark"] .status-badge,
+:root[data-theme="dark"] .stock-badge {
+  color: #edf3fa;
+}
+
+
+
+/* =========================================
+   ADMIN + CUSTOMER DARK MODE FINAL FIX
+========================================= */
+
+/* Admin cards and summary panels */
+:root[data-theme="dark"] .admin-orders-summary > div,
+:root[data-theme="dark"] .admin-orders-table-card,
+:root[data-theme="dark"] .admin-customers-card,
+:root[data-theme="dark"] .admin-customer-stat,
+:root[data-theme="dark"] .coupon-stat-card,
+:root[data-theme="dark"] .coupon-form-card,
+:root[data-theme="dark"] .coupon-table-card {
+  background: var(--ss-surface) !important;
+  color: var(--ss-ink) !important;
+  border: 1px solid var(--ss-border) !important;
+  box-shadow: var(--ss-shadow);
+}
+
+/* Headings and descriptions */
+:root[data-theme="dark"] .admin-orders-header h1,
+:root[data-theme="dark"] .admin-orders-table-heading h2,
+:root[data-theme="dark"] .admin-customers-header h1,
+:root[data-theme="dark"] .admin-customers-table-heading h2,
+:root[data-theme="dark"] .coupons-heading h1,
+:root[data-theme="dark"] .coupon-form-heading h2,
+:root[data-theme="dark"] .coupon-table-card h2 {
+  color: var(--ss-ink) !important;
+}
+
+:root[data-theme="dark"] .admin-orders-header p,
+:root[data-theme="dark"] .admin-orders-summary span,
+:root[data-theme="dark"] .admin-orders-table-heading span,
+:root[data-theme="dark"] .admin-customers-header p,
+:root[data-theme="dark"] .admin-customers-table-heading span,
+:root[data-theme="dark"] .admin-customer-stat span,
+:root[data-theme="dark"] .coupons-heading p,
+:root[data-theme="dark"] .coupon-stat-card span {
+  color: var(--ss-muted) !important;
+}
+
+/* Search fields, filters and coupon forms */
+:root[data-theme="dark"] .admin-orders-toolbar input,
+:root[data-theme="dark"] .admin-orders-toolbar select,
+:root[data-theme="dark"] .admin-customers-controls input,
+:root[data-theme="dark"] .admin-customers-controls select,
+:root[data-theme="dark"] .coupon-toolbar input,
+:root[data-theme="dark"] .coupon-toolbar select,
+:root[data-theme="dark"] .coupon-field input,
+:root[data-theme="dark"] .coupon-field select {
+  background: var(--ss-surface-soft) !important;
+  color: var(--ss-ink) !important;
+  border-color: var(--ss-border) !important;
+}
+
+:root[data-theme="dark"] .coupon-field label {
+  color: var(--ss-ink) !important;
+}
+
+/* Tables */
+:root[data-theme="dark"] .admin-orders-table th,
+:root[data-theme="dark"] .admin-customers-table th,
+:root[data-theme="dark"] .coupon-table th {
+  background: #29394c !important;
+  color: #f1f5fb !important;
+}
+
+:root[data-theme="dark"] .admin-orders-table td,
+:root[data-theme="dark"] .admin-customers-table td,
+:root[data-theme="dark"] .coupon-table td {
+  color: var(--ss-ink) !important;
+  border-color: var(--ss-border) !important;
+}
+
+/* Coupon action buttons */
+:root[data-theme="dark"] .coupon-edit-btn,
+:root[data-theme="dark"] .admin-order-details-btn {
+  background: #185db5 !important;
+  color: #ffffff !important;
+  border: 1px solid #347edb !important;
+}
+
+:root[data-theme="dark"] .coupon-activate-btn,
+:root[data-theme="dark"] .admin-customer-action.activate {
+  background: #145c3b !important;
+  color: #c9f7dc !important;
+  border: 1px solid #238653 !important;
+}
+
+:root[data-theme="dark"] .coupon-deactivate-btn,
+:root[data-theme="dark"] .admin-customer-action.deactivate {
+  background: #642b31 !important;
+  color: #ffe0e2 !important;
+  border: 1px solid #a9434d !important;
+}
+
+/* Secondary buttons and pagination */
+:root[data-theme="dark"] .coupon-cancel-btn,
+:root[data-theme="dark"] .admin-orders-pagination button,
+:root[data-theme="dark"] .admin-customers-pagination button {
+  background: var(--ss-surface-soft) !important;
+  color: var(--ss-ink) !important;
+  border: 1px solid var(--ss-border) !important;
+}
+
+:root[data-theme="dark"] .coupon-close-btn {
+  color: var(--ss-ink) !important;
+}
+
+/* Admin order status badges */
+:root[data-theme="dark"] .admin-order-status {
+  background: #263b59 !important;
+  color: #c7ddff !important;
+}
+
+:root[data-theme="dark"] .admin-order-status.delivered {
+  background: #164b36 !important;
+  color: #b9f3d2 !important;
+}
+
+:root[data-theme="dark"] .admin-order-status.cancelled,
+:root[data-theme="dark"] .admin-order-status.refunded {
+  background: #5a292f !important;
+  color: #ffd2d6 !important;
+}
+
+/* Customer order cards and status badges */
+:root[data-theme="dark"] .order-status {
+  background: #263b59 !important;
+  color: #c7ddff !important;
+}
+
+:root[data-theme="dark"] .order-status.success,
+:root[data-theme="dark"] .order-status.delivered {
+  background: #164b36 !important;
+  color: #b9f3d2 !important;
+}
+
+:root[data-theme="dark"] .order-status.cancelled,
+:root[data-theme="dark"] .order-status.failed {
+  background: #5a292f !important;
+  color: #ffd2d6 !important;
+}
+
+:root[data-theme="dark"] .order-meta,
+:root[data-theme="dark"] .order-products,
+:root[data-theme="dark"] .order-product,
+:root[data-theme="dark"] .order-shipping,
+:root[data-theme="dark"] .order-card-footer {
+  border-color: var(--ss-border) !important;
+}
+
+:root[data-theme="dark"] .order-label,
+:root[data-theme="dark"] .order-meta,
+:root[data-theme="dark"] .order-product-details span,
+:root[data-theme="dark"] .order-shipping p {
+  color: var(--ss-muted) !important;
+}
+
+:root[data-theme="dark"] .order-product-details h4,
+:root[data-theme="dark"] .order-shipping > span {
+  color: var(--ss-ink) !important;
+}
+
+:root[data-theme="dark"] .order-cancel-btn {
+  background: #492a30 !important;
+  color: #ffd2d6 !important;
+  border-color: #87434c !important;
+}
