@@ -3,9 +3,13 @@ package com.salessavvy.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.salessavvy.dto.AdminOrderDetailsResponse;
 import com.salessavvy.dto.AdminOrderResponse;
 import com.salessavvy.dto.OrderResponse;
@@ -37,9 +41,29 @@ public class AdminOrderController {
         this.paymentRepository = paymentRepository;
     }
 
+    // ADMIN AUTHORIZATION
+    private void checkAdmin(Authentication authentication) {
+
+        boolean isAdmin = authentication != null
+                && authentication.getAuthorities().stream()
+                        .anyMatch(authority ->
+                                authority.getAuthority()
+                                        .equals("ROLE_ADMIN"));
+
+        if (!isAdmin) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Only administrators can access this endpoint");
+        }
+    }
+
+    // GET ALL ORDERS
     @GetMapping
     @Transactional(readOnly = true)
-    public ResponseEntity<List<AdminOrderResponse>> getAllOrders() {
+    public ResponseEntity<List<AdminOrderResponse>> getAllOrders(
+            Authentication authentication) {
+
+        checkAdmin(authentication);
 
         List<AdminOrderResponse> orders =
                 orderRepository.findAll().stream()
@@ -74,22 +98,30 @@ public class AdminOrderController {
         return ResponseEntity.ok(orders);
     }
 
+    // UPDATE ORDER STATUS
     @PutMapping("/{orderId}/status")
     public ResponseEntity<OrderResponse> updateOrderStatus(
+            Authentication authentication,
             @PathVariable Long orderId,
             @RequestParam OrderStatus status) {
+
+        checkAdmin(authentication);
 
         OrderResponse response =
                 orderService.updateOrderStatus(orderId, status);
 
         return ResponseEntity.ok(response);
     }
+
+    // GET ADMIN ORDER DETAILS
     @GetMapping("/{orderId}")
     public ResponseEntity<AdminOrderDetailsResponse> getOrderDetails(
+            Authentication authentication,
             @PathVariable Long orderId) {
 
+        checkAdmin(authentication);
+
         return ResponseEntity.ok(
-                orderService.getAdminOrderDetails(orderId)
-        );
+                orderService.getAdminOrderDetails(orderId));
     }
 }

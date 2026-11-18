@@ -44,6 +44,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final InventoryMovementRepository movementRepository;
     private final CouponService couponService;
     private final RazorpayService razorpayService;
+    private final OrderTrackingService orderTrackingService;
 
     public PaymentServiceImpl(
             PaymentRepository paymentRepository,
@@ -52,7 +53,8 @@ public class PaymentServiceImpl implements PaymentService {
             ProductRepository productRepository,
             InventoryMovementRepository movementRepository,
             CouponService couponService,
-            RazorpayService razorpayService) {
+            RazorpayService razorpayService,
+            OrderTrackingService orderTrackingService) {
 
         this.paymentRepository = paymentRepository;
         this.orderRepository = orderRepository;
@@ -61,6 +63,7 @@ public class PaymentServiceImpl implements PaymentService {
         this.movementRepository = movementRepository;
         this.couponService = couponService;
         this.razorpayService = razorpayService;
+        this.orderTrackingService = orderTrackingService;
     }
 
     private User getUser(String email) {
@@ -91,7 +94,28 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
+    /*
+     * Confirms an order and records the status transition
+     * in the order tracking history.
+     */
+    private void confirmOrder(Order order, String email) {
+
+        OrderStatus previousStatus = order.getStatus();
+
+        order.setStatus(OrderStatus.CONFIRMED);
+
+        orderRepository.save(order);
+
+        orderTrackingService.recordStatusChange(
+                order,
+                previousStatus,
+                OrderStatus.CONFIRMED,
+                email,
+                "Payment completed successfully. Order confirmed.");
+    }
+
     private PaymentResponse convertToResponse(Payment payment) {
+
         PaymentResponse response = new PaymentResponse(
                 payment.getId(),
                 payment.getOrder().getId(),
@@ -113,6 +137,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     private void recordCouponUsage(Order order) {
+
         if (order.getCouponCode() != null
                 && !order.getCouponCode().isBlank()) {
 
@@ -165,6 +190,67 @@ public class PaymentServiceImpl implements PaymentService {
             movementRepository.save(movement);
         }
     }
+
+@Override
+public PaymentResponse collectCodPayment(
+        String email, Long orderId) {
+
+    // Verify that the requester is an administrator
+    getAdmin(email);
+
+    // Lock the order before updating its payment
+    Order order = orderRepository.findByIdForUpdate(orderId)
+            .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Order not found"));
+
+    // COD collection is allowed only after delivery
+    if (order.getStatus() != OrderStatus.DELIVERED) {
+        throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "COD payment can only be collected for delivered orders");
+    }
+
+    // Find the latest payment for this order
+    List<Payment> payments =
+            paymentRepository.findByOrder_IdOrderByCreatedAtDesc(orderId);
+
+    if (payments.isEmpty()) {
+        throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Payment not found for this order");
+    }
+
+    Payment latestPayment = payments.get(0);
+
+    // Lock the payment before updating it
+    Payment payment = paymentRepository.findByIdForUpdate(
+            latestPayment.getId())
+            .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Payment not found"));
+
+    // Only COD payments can be collected through this operation
+    if (payment.getPaymentMethod() != PaymentMethod.CASH_ON_DELIVERY) {
+        throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "This order does not have a Cash on Delivery payment");
+    }
+
+    // Prevent duplicate collection
+    if (payment.getStatus() != PaymentStatus.PENDING) {
+        throw new ResponseStatusException(
+                HttpStatus.CONFLICT,
+                "COD payment is not pending or has already been collected");
+    }
+
+    // Record successful COD collection
+    payment.setStatus(PaymentStatus.SUCCESS);
+    payment.setPaymentDate(LocalDateTime.now());
+
+    payment = paymentRepository.save(payment);
+
+    return convertToResponse(payment);
+}
+
 
     @Override
     public PaymentResponse initiatePayment(
@@ -241,10 +327,11 @@ public class PaymentServiceImpl implements PaymentService {
                 == PaymentMethod.CASH_ON_DELIVERY) {
 
             payment.setStatus(PaymentStatus.PENDING);
-            order.setStatus(OrderStatus.CONFIRMED);
+
+            confirmOrder(order, email);
 
             recordCouponUsage(order);
-            orderRepository.save(order);
+
             payment = paymentRepository.save(payment);
 
         } else {
@@ -373,11 +460,10 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setStatus(PaymentStatus.SUCCESS);
         payment.setPaymentDate(LocalDateTime.now());
 
-        order.setStatus(OrderStatus.CONFIRMED);
+        confirmOrder(order, email);
 
         recordCouponUsage(order);
 
-        orderRepository.save(order);
         payment = paymentRepository.save(payment);
 
         return convertToResponse(payment);
@@ -417,8 +503,6 @@ public class PaymentServiceImpl implements PaymentService {
                     "Payment is not in a pending verification state");
         }
 
-        // Never mark a payment failed based only on a browser callback.
-        // The Razorpay payment ID must be available for server verification.
         if (payment.getRazorpayPaymentId() == null
                 || payment.getRazorpayOrderId() == null) {
 
@@ -448,7 +532,8 @@ public class PaymentServiceImpl implements PaymentService {
             payment.setStatus(PaymentStatus.SUCCESS);
             payment.setPaymentDate(LocalDateTime.now());
 
-            order.setStatus(OrderStatus.CONFIRMED);
+            confirmOrder(order, email);
+
             recordCouponUsage(order);
 
         } else if ("failed".equalsIgnoreCase(razorpayStatus)) {
@@ -462,7 +547,6 @@ public class PaymentServiceImpl implements PaymentService {
             order.setStatus(OrderStatus.CANCELLED);
 
         } else {
-            // Authorized or other non-final states remain pending.
             return convertToResponse(payment);
         }
 
@@ -535,8 +619,6 @@ public class PaymentServiceImpl implements PaymentService {
                 order.setStatus(OrderStatus.REFUNDED);
 
             } else {
-                // Pending or unrecognized responses are not treated
-                // as completed refunds.
                 payment.setStatus(PaymentStatus.REFUND_PENDING);
             }
 

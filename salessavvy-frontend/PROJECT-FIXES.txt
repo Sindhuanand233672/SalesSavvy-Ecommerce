@@ -1,0 +1,32 @@
+SALESSAVVY FRONTEND - REVIEWED PATCH
+
+Changes included:
+1. Vite is configured to use localhost:5173 only (strictPort=true). It will stop with an error rather than silently switching to 5174 if another process occupies 5173.
+2. ProductDetails.jsx has been restored to the original frontend version from fee.zip. This preserves the existing product/cart/wishlist/review behavior instead of the regressed edits in fe(1).zip.
+3. MyReviews.jsx uses the existing Axios API client (including the existing JWT interceptor), includes the shared Navbar and Footer, handles loading/errors, and links back to each product.
+4. The customer Navbar now includes My Reviews.
+5. App.jsx keeps the /my-reviews customer-protected route.
+
+INSTALL / RUN:
+- Back up your current sales-savvy-frontend folder.
+- Extract this ZIP into a NEW folder, or replace the existing frontend folder with its contents.
+- Open a terminal in the extracted frontend folder.
+- Run: npm install
+- Run: npm run dev
+- Open: http://localhost:5173/
+
+PORT 5173:
+If 5173 is already occupied, open CMD and run:
+  netstat -ano | findstr :5173
+Find the PID on the LISTENING line. Check it:
+  tasklist /FI "PID eq YOUR_PID"
+If it is an old Node/Vite process, stop it:
+  taskkill /PID YOUR_PID /F
+Then run npm run dev again.
+Do not kill an unfamiliar process.
+
+IMPORTANT DATABASE NOTE:
+The supplied TiDB screenshot shows SELECT COUNT(*) FROM products returning 7 in the sales_savvy schema. The supplied frontend/backend ZIP files contain no SQL dump, CSV, or product seed file for the missing 150 products. This frontend patch does not change or delete database records. Do not drop/recreate tables. Product recovery needs a TiDB backup/export or the original product import file.
+
+VALIDATION LIMITATION:
+I inspected the supplied source files and patched the identified frontend issues. Dependency installation/build could not be completed in this environment because npm registry access timed out; run npm install and npm run build locally to verify against your installed dependencies.

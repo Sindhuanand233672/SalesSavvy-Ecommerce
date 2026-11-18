@@ -1,3 +1,4 @@
+
 package com.salessavvy.service;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.salessavvy.dto.ProductReviewRequest;
 import com.salessavvy.dto.ProductReviewResponse;
+import com.salessavvy.entity.OrderStatus;
 import com.salessavvy.entity.Product;
 import com.salessavvy.entity.ProductReview;
 import com.salessavvy.entity.User;
@@ -68,9 +70,24 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 
         if (Boolean.FALSE.equals(product.getActive())) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Cannot review an inactive product");
+                    HttpStatus.BAD_REQUEST,
+                    "Cannot review an inactive product");
         }
 
+        // A customer can review only a product from a delivered order.
+        boolean deliveredPurchase =
+                reviewRepository.hasDeliveredProduct(
+                        user.getId(),
+                        product.getId(),
+                        OrderStatus.DELIVERED);
+
+        if (!deliveredPurchase) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "You can review this product only after it has been delivered to you");
+        }
+
+        // One review per customer per product.
         if (reviewRepository.existsByUser_IdAndProduct_Id(
                 user.getId(), product.getId())) {
 
@@ -155,11 +172,12 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 
         if (Boolean.TRUE.equals(review.getApproved())) {
             throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "An approved review cannot be rejected");
+                    HttpStatus.CONFLICT,
+                    "An approved review cannot be rejected");
         }
 
-        // Rejection removes the pending review. The existing schema has only
-        // an approved flag and no rejected state/history column.
+        // Existing schema has no rejected status, so rejection deletes
+        // the pending review.
         reviewRepository.delete(review);
     }
 

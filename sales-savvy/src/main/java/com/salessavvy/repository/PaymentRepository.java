@@ -5,13 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.salessavvy.entity.Payment;
-
-import jakarta.persistence.LockModeType;
 
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
@@ -23,13 +20,21 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     List<Payment> findByOrder_IdOrderByCreatedAtDesc(Long orderId);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT p FROM Payment p WHERE p.id = :paymentId")
+    // Lock individual payment row using native TiDB/MySQL SQL
+    @Query(
+        value = "SELECT * FROM payments WHERE id = :paymentId FOR UPDATE",
+        nativeQuery = true
+    )
     Optional<Payment> findByIdForUpdate(
-            @Param("paymentId") Long paymentId);
+            @Param("paymentId") Long paymentId
+    );
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT p FROM Payment p WHERE p.order.id = :orderId")
+    // Lock all payments belonging to an order
+    @Query(
+        value = "SELECT * FROM payments WHERE order_id = :orderId FOR UPDATE",
+        nativeQuery = true
+    )
     List<Payment> findByOrderIdForUpdate(
-            @Param("orderId") Long orderId);
+            @Param("orderId") Long orderId
+    );
 }

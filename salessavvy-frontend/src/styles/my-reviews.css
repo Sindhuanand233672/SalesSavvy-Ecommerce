@@ -1,0 +1,160 @@
+
+.my-reviews-page {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 55px 30px 80px;
+  min-height: 75vh;
+  color: #17243a;
+}
+
+.my-reviews-header {
+  margin-bottom: 35px;
+}
+
+.my-reviews-eyebrow {
+  color: #246ef5;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.my-reviews-header h1 {
+  font-size: 38px;
+  margin: 12px 0;
+}
+
+.my-reviews-header > p:last-child {
+  color: #718096;
+  font-size: 16px;
+}
+
+.my-reviews-empty,
+.my-review-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+
+.my-reviews-empty {
+  text-align: center;
+  padding: 65px 20px;
+}
+
+.my-reviews-empty p,
+.reviews-message {
+  color: #718096;
+}
+
+.my-review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.my-review-top h2 {
+  font-size: 19px;
+  margin: 0 0 7px;
+}
+
+.my-review-top p {
+  color: #718096;
+  font-size: 13px;
+  margin: 0;
+}
+
+.review-status {
+  padding: 7px 13px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.review-status.approved {
+  color: #087443;
+  background: #dcfce7;
+}
+
+.review-status.pending {
+  color: #9a6700;
+  background: #fff3cd;
+}
+
+.my-review-stars {
+  color: #f5a623;
+  font-size: 23px;
+  margin: 20px 0 12px;
+  letter-spacing: 3px;
+}
+
+.my-review-comment {
+  color: #536174;
+  line-height: 1.7;
+}
+
+.reviews-error {
+  background: #fff0f0;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 20px;
+  color: #dc2626;
+}
+
+.reviews-error button {
+  display: block;
+  margin-top: 12px;
+  padding: 9px 18px;
+  border: none;
+  border-radius: 7px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .my-reviews-page {
+    padding: 35px 18px 60px;
+  }
+
+  .my-reviews-header h1 {
+    font-size: 30px;
+  }
+}
+
+.my-reviews-shop-link,
+.my-review-product-link {
+  display: inline-block;
+  margin-top: 14px;
+  color: #1769dc;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.my-reviews-shop-link:hover,
+.my-review-product-link:hover {
+  text-decoration: underline;
+}
+
+.reviews-error p {
+  margin: 0;
+}
+
+:root[data-theme="dark"] .my-reviews-page {
+  color: var(--ss-ink, #f1f5f9);
+}
+
+:root[data-theme="dark"] .my-review-card,
+:root[data-theme="dark"] .my-reviews-empty {
+  background: var(--ss-surface, #1e293b);
+  border-color: var(--ss-border, #334155);
+}
+
+:root[data-theme="dark"] .my-review-top p,
+:root[data-theme="dark"] .my-review-comment,
+:root[data-theme="dark"] .my-reviews-empty p,
+:root[data-theme="dark"] .reviews-message {
+  color: var(--ss-muted, #cbd5e1);
+}

@@ -79,9 +79,14 @@ function Navbar() {
           <Link to="/deals" onClick={closeMenus}>Deals</Link>
 
           {isLoggedIn && !isAdmin && (
-            <Link to="/orders" onClick={closeMenus}>
-              My Orders
-            </Link>
+            <>
+              <Link to="/orders" onClick={closeMenus}>
+                My Orders
+              </Link>
+              <Link to="/my-reviews" onClick={closeMenus}>
+                My Reviews
+              </Link>
+            </>
           )}
 
           {isAdmin && (

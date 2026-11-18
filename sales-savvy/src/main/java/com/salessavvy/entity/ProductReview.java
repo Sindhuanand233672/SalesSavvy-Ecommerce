@@ -31,7 +31,7 @@ public class ProductReview {
     @Column(nullable = false)
     private Integer rating;
 
-    @Column(length = 1000)
+    @Column(name = "review_text", nullable = false, length = 1000)
     private String comment;
 
     @Column(nullable = false)
@@ -40,19 +40,28 @@ public class ProductReview {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
     public ProductReview() {
     }
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+
+        this.createdAt = now;
+        this.updatedAt = now;
 
         if (this.approved == null) {
             this.approved = false;
         }
     }
 
-    // Getters and Setters
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -104,5 +113,17 @@ public class ProductReview {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

@@ -23,10 +23,10 @@ public class AdminPasswordReset {
             PasswordEncoder passwordEncoder) {
 
         return args -> {
-            String adminEmail = requiredEnv("ADMIN_EMAIL");
-            String adminPassword = requiredEnv("ADMIN_PASSWORD");
-            String customerEmail = requiredEnv("CUSTOMER_EMAIL");
-            String customerPassword = requiredEnv("CUSTOMER_PASSWORD");
+            String adminEmail = requiredEnv("sindhuanand233672+admin@gmail.com");
+            String adminPassword = requiredEnv("Sindhu@2026!");
+            String customerEmail = requiredEnv("moha@gmail.com");
+            String customerPassword = requiredEnv("Moha@123");
 
             resetPassword(userRepository, passwordEncoder, adminEmail, adminPassword);
             resetPassword(userRepository, passwordEncoder, customerEmail, customerPassword);

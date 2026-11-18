@@ -1,3 +1,4 @@
+
 package com.salessavvy.service;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface PaymentService {
     PaymentResponse failPayment(String email, Long paymentId);
 
     PaymentResponse refundPayment(String email, Long paymentId);
+
+    PaymentResponse collectCodPayment(String email, Long orderId);
 }

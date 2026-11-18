@@ -23,3 +23,4 @@
 *.log
 .DS_Store
 Thumbs.db
+/salessavvy-frontend_backup/

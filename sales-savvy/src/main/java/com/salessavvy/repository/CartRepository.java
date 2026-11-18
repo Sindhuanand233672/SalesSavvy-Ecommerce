@@ -1,22 +1,25 @@
 
 package com.salessavvy.repository;
-import jakarta.persistence.LockModeType;
 
-import org.springframework.data.jpa.repository.Lock;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.salessavvy.entity.Cart;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
+    // Find cart using customer ID
     Optional<Cart> findByUser_Id(Long userId);
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT c FROM Cart c WHERE c.user.id = :userId")
-    Optional<Cart> findByUser_IdForUpdate(@Param("userId") Long userId);
-    
 
+    // Lock the cart row using native MySQL/TiDB SQL
+    @Query(
+        value = "SELECT * FROM carts WHERE user_id = :userId FOR UPDATE",
+        nativeQuery = true
+    )
+    Optional<Cart> findByUser_IdForUpdate(
+            @Param("userId") Long userId
+    );
 }

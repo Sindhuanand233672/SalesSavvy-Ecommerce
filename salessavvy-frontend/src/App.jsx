@@ -5,6 +5,7 @@ import OrderDetails from "./pages/OrderDetails";
 import Wishlist from "./pages/Wishlist";
 import Home from "./pages/Home";
 import Orders from "./pages/Orders";
+import MyReviews from "./pages/MyReviews";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
@@ -71,10 +72,7 @@ function AppRoutes() {
       <Route path="/deals" element={<Deals />} />
 
       {/* Public Product Details */}
-      <Route
-        path="/products/:id"
-        element={<ProductDetails />}
-      />
+      <Route path="/products/:id" element={<ProductDetails />} />
 
       {/* Customer-only Pages */}
       <Route
@@ -109,6 +107,15 @@ function AppRoutes() {
         element={
           <CustomerRoute>
             <Wishlist />
+          </CustomerRoute>
+        }
+      />
+
+      <Route
+        path="/my-reviews"
+        element={
+          <CustomerRoute>
+            <MyReviews />
           </CustomerRoute>
         }
       />

@@ -94,4 +94,15 @@ public class PaymentController {
                 paymentService.refundPayment(
                         authentication.getName(), paymentId));
     }
+
+    // Admin collects Cash on Delivery payment
+    @PutMapping("/orders/{orderId}/collect-cod")
+    public ResponseEntity<PaymentResponse> collectCodPayment(
+            Authentication authentication,
+            @PathVariable Long orderId) {
+
+        return ResponseEntity.ok(
+                paymentService.collectCodPayment(
+                        authentication.getName(), orderId));
+    }
 }

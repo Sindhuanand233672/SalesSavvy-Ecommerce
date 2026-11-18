@@ -31,3 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local backup folders
+/salessavvy-frontend_backup/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+
+/salessavvy-frontend_backup/

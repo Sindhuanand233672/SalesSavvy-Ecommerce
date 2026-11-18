@@ -250,13 +250,19 @@ public class SecurityConfig {
                     "/api/checkout/**"
                 ).hasRole("CUSTOMER")
 
-                // Payments: refund is admin-only
+                // Payments: COD collection is ADMIN-only
+                .requestMatchers(
+                    HttpMethod.PUT,
+                    "/api/payments/orders/*/collect-cod"
+                ).hasRole("ADMIN")
+
+                // Payment refunds are ADMIN-only
                 .requestMatchers(
                     HttpMethod.PUT,
                     "/api/payments/*/refund"
                 ).hasRole("ADMIN")
 
-                // All other payment operations are customer-only
+                // All remaining payment operations are CUSTOMER-only
                 .requestMatchers(
                     "/api/payments/**"
                 ).hasRole("CUSTOMER")

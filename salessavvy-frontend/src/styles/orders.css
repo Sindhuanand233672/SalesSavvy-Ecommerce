@@ -340,3 +340,95 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* Order tracking timeline */
+
+.tracking-timeline {
+  margin-top: 24px;
+  padding-left: 8px;
+}
+
+.tracking-event {
+  display: flex;
+  gap: 18px;
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.tracking-event:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 25px;
+  height: calc(100% - 20px);
+  width: 2px;
+  background: #dbe5f2;
+}
+
+.tracking-marker {
+  position: relative;
+  z-index: 1;
+  color: #16a36a;
+  background: #e9f9f0;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.tracking-content h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.tracking-content p {
+  margin: 5px 0;
+  color: #64748b;
+}
+
+.tracking-content span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.tracking-content small {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+}
+
+.delivery-estimate {
+  margin-top: 18px;
+  padding: 14px;
+  background: #f1f6ff;
+  border-radius: 10px;
+  color: #245caa;
+}
+
+.delivery-estimate p {
+  margin: 6px 0 0;
+}
+
+.delivery-completed {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #15945b;
+  margin-top: 14px;
+}
+
+.refresh-spinning {
+  animation: refreshSpin 1s linear infinite;
+}
+
+@keyframes refreshSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}

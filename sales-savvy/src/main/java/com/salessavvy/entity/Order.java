@@ -2,7 +2,9 @@
 package com.salessavvy.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +34,22 @@ public class Order {
 
     @Column(nullable = false, length = 500)
     private String shippingAddress;
-    
+
     @Column(length = 50)
     private String couponCode;
+
+    // Smart Delivery Fields
+
+    private LocalDate estimatedDeliveryDate;
+
+    private LocalTime deliveryStartTime;
+
+    private LocalTime deliveryEndTime;
+
+    private LocalDateTime deliveredAt;
+
+    @Column(length = 500)
+    private String deliveryRemarks;
 
     @OneToMany(
         mappedBy = "order",
@@ -48,7 +63,10 @@ public class Order {
 
     @PrePersist
     public void prePersist() {
-        this.orderDate = LocalDateTime.now();
+
+        if (this.orderDate == null) {
+            this.orderDate = LocalDateTime.now();
+        }
 
         if (this.status == null) {
             this.status = OrderStatus.PENDING;
@@ -57,15 +75,6 @@ public class Order {
         if (this.totalAmount == null) {
             this.totalAmount = BigDecimal.ZERO;
         }
-    }
-
-    // Getters and Setters
-    public String getCouponCode() {
-        return couponCode;
-    }
-
-    public void setCouponCode(String couponCode) {
-        this.couponCode = couponCode;
     }
 
     public Long getId() {
@@ -112,12 +121,64 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
+    public String getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
+    }
+
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
-        
+    }
+
+    // Delivery Getters and Setters
+
+    public LocalDate getEstimatedDeliveryDate() {
+        return estimatedDeliveryDate;
+    }
+
+    public void setEstimatedDeliveryDate(
+            LocalDate estimatedDeliveryDate) {
+        this.estimatedDeliveryDate = estimatedDeliveryDate;
+    }
+
+    public LocalTime getDeliveryStartTime() {
+        return deliveryStartTime;
+    }
+
+    public void setDeliveryStartTime(
+            LocalTime deliveryStartTime) {
+        this.deliveryStartTime = deliveryStartTime;
+    }
+
+    public LocalTime getDeliveryEndTime() {
+        return deliveryEndTime;
+    }
+
+    public void setDeliveryEndTime(
+            LocalTime deliveryEndTime) {
+        this.deliveryEndTime = deliveryEndTime;
+    }
+
+    public LocalDateTime getDeliveredAt() {
+        return deliveredAt;
+    }
+
+    public void setDeliveredAt(LocalDateTime deliveredAt) {
+        this.deliveredAt = deliveredAt;
+    }
+
+    public String getDeliveryRemarks() {
+        return deliveryRemarks;
+    }
+
+    public void setDeliveryRemarks(String deliveryRemarks) {
+        this.deliveryRemarks = deliveryRemarks;
     }
 }
